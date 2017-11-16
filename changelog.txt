@@ -1,3 +1,7 @@
+[B]1.2.2[/B]
+- Cosmetics
+- Tweaks in addon.xml
+
 [B]1.2.1[/B]
 - Reverted an argument in items_list_2 method to former state
 - Fixed url returns to separate youtube from direct
