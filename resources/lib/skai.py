@@ -15,12 +15,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import urlparse, urllib, json, datetime, re
-from tulip import bookmarks, directory, client, cache, workers
+import urlparse, json, datetime, re
+from tulip import bookmarks, directory, client, cache, workers, control
 
 
 class indexer:
+
     def __init__(self):
+
         self.list = []; self.data = []
         self.base_link = 'http://www.skai.gr'
         self.archive_link = 'http://www.skai.gr/player/tvlive/'
@@ -33,52 +35,53 @@ class indexer:
         self.live_link = 'http://www.skai.gr/ajax.aspx?m=NewModules.LookupMultimedia&mmid=/Root/TVLive'
 
     def root(self):
+
         self.list = [
             {
-                'title': 32001,
+                'title': control.lang(32001),
                 'action': 'live',
                 'isFolder': 'False',
                 'icon': 'live.png'
-            },
-
+            }
+            ,
             {
-                'title': 32002,
+                'title': control.lang(32002),
                 'action': 'tvshows',
                 'icon': 'tvshows.png'
-            },
-
+            }
+            ,
             {
-                'title': 32003,
+                'title': control.lang(32003),
                 'action': 'podcasts',
                 'icon': 'podcasts.png'
-            },
-
+            }
+            ,
             {
-                'title': 32004,
+                'title': control.lang(32004),
                 'action': 'archive',
                 'icon': 'archive.png'
-            },
-
+            }
+            ,
             {
-                'title': 32005,
+                'title': control.lang(32005),
                 'action': 'popular',
                 'icon': 'popular.png'
-            },
-
+            }
+            ,
             {
-                'title': 32006,
+                'title': control.lang(32006),
                 'action': 'news',
                 'icon': 'news.png'
-            },
-
+            }
+            ,
             {
-                'title': 32007,
+                'title': control.lang(32007),
                 'action': 'sports',
                 'icon': 'sports.png'
-            },
-
+            }
+            ,
             {
-                'title': 32008,
+                'title': control.lang(32008),
                 'action': 'bookmarks',
                 'icon': 'bookmarks.png'
             }
@@ -185,7 +188,7 @@ class indexer:
         directory.resolve(self.resolve(url))
 
     def live(self):
-        directory.resolve(self.resolve_live(), meta={'title': 'SKAI'})
+        directory.resolve(self.resolve(self.resolve_live()), meta={'title': 'SKAI'})
 
     def item_list_1(self, url):
 
@@ -322,55 +325,34 @@ class indexer:
     def resolve(self, url):
 
         try:
+            if not url.startswith('rtmp'):
+                raise Exception()
 
-            try:
-                if not url.startswith('rtmp'):
-                    raise Exception()
+            p = re.findall('/([a-zA-Z0-9]{3,}\:)', url)
 
-                p = re.findall('/([a-zA-Z0-9]{3,}\:)', url)
+            if len(p) > 0:
+                url = url.replace(p[0], ' playpath=%s' % p[0])
 
-                if len(p) > 0:
-                    url = url.replace(p[0], ' playpath=%s' % p[0])
-
-                url += ' timeout=10'
-
-                return url
-
-            except Exception:
-
-                if len(url) == 11:
-                    link = 'plugin://plugin.video.youtube/play/?video_id={0}'.format(url)
-                    return link
-                else:
-                    return url
-
-        except:
-
-            return
-
-    def resolve_live(self):
-        try:
-            url = client.request(self.live_link)
-
-            url = client.parseDOM(url, 'File')[0]
-            url = re.findall('([0-9A-Za-z_\-]+)', url)[-1]
-            url = 'http://www.youtube.com/watch?v=%s' % url
-
-            result = client.request(url)
-            url = re.findall('"hlsvp"\s*:\s*"(.+?)"', result)[0]
-            url = urllib.unquote(url).replace('\\/', '/')
-
-            result = client.request(url)
-            result = result.replace('\n', '')
-            url = re.findall('RESOLUTION\s*=\s*(\d*)x\d{1}.+?(http.+?\.m3u8)', result)
-
-            url = [(int(i[0]), i[1]) for i in url]
-            url.sort()
-            url = url[-1][1]
+            url += ' timeout=10'
 
             return url
-        except:
-            return
+
+        except Exception:
+
+            if len(url) == 11:
+                link = 'plugin://plugin.video.youtube/play/?video_id={0}'.format(url)
+                return link
+            else:
+                return url
+
+    def resolve_live(self):
+
+        url = client.request(self.live_link)
+
+        url = client.parseDOM(url, 'File')[0]
+        url = re.findall('([0-9A-Za-z_\-]+)', url)[-1]
+
+        return url
 
     def thread(self, url, i):
 
