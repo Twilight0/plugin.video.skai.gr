@@ -17,6 +17,7 @@
 
 import urlparse, json, datetime, re
 from tulip import bookmarks, directory, client, cache, workers, control
+from youtube_resolver import resolve as yt_resolver
 
 
 class indexer:
@@ -32,7 +33,6 @@ class indexer:
         self.news_link = 'http://www.skai.gr/Ajax.aspx?m=Skai.Player.ItemView&cid=6&alid=43505'
         self.sports_link = 'http://www.skai.gr/Ajax.aspx?m=Skai.Player.ItemView&cid=6&alid=14'
         self.episodes_link = 'http://www.skai.gr/Ajax.aspx?m=Skai.Player.ItemView&cid=6&alid=%s'
-        self.live_link = 'http://www.skai.gr/ajax.aspx?m=NewModules.LookupMultimedia&mmid=/Root/TVLive'
 
     def root(self):
 
@@ -188,7 +188,10 @@ class indexer:
         directory.resolve(self.resolve(url))
 
     def live(self):
-        directory.resolve(self.resolve(self.resolve_live()), meta={'title': 'SKAI'})
+
+        stream = self.resolve(self.resolve_live())
+
+        directory.resolve(stream, meta={'title': 'SKAI'}, dash='dash' in stream)
 
     def item_list_1(self, url):
 
@@ -291,8 +294,6 @@ class indexer:
             except:
                 pass
 
-        print self.list
-
         return self.list
 
     def item_list_3(self, url):
@@ -328,7 +329,7 @@ class indexer:
             if not url.startswith('rtmp'):
                 raise Exception()
 
-            p = re.findall('/([a-zA-Z0-9]{3,}\:)', url)
+            p = re.findall('/([a-zA-Z0-9]{3,}:)', url)
 
             if len(p) > 0:
                 url = url.replace(p[0], ' playpath=%s' % p[0])
@@ -347,12 +348,21 @@ class indexer:
 
     def resolve_live(self):
 
-        url = client.request(self.live_link)
+        html = client.request(self.archive_link)
+        url = client.parseDOM(html, 'span', attrs={'itemprop': 'contentUrl'}, ret='href')[0]
 
-        url = client.parseDOM(url, 'File')[0]
-        url = re.findall('([0-9A-Za-z_\-]+)', url)[-1]
+        stream = self.yt_session(url)
 
-        return url
+        return stream
+
+    @staticmethod
+    def yt_session(yt_id):
+
+        streams = yt_resolver(yt_id)
+
+        stream = streams[0]['url']
+
+        return stream
 
     def thread(self, url, i):
 
