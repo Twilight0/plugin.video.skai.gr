@@ -521,7 +521,7 @@ class indexer:
 
         if not addon_enabled:
 
-            streams = [s for s in streams if 'dash' not in s['title'].lower()]
+            streams = [s for s in streams if 'mpd' not in s['title']]
 
         stream = streams[0]['url']
 
