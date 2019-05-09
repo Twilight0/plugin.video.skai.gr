@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 import json, re
 from tulip import bookmarks, directory, client, cache, control, youtube, workers
 from youtube_resolver import resolve as yt_resolver
-from tulip.compat import urljoin, urlparse, parse_qs
+from tulip.compat import urljoin
 
 
 class indexer:
@@ -488,6 +488,12 @@ class indexer:
                 stream = self.yt_session(youtu_id)
 
             return stream, plot
+
+        elif 'episode' in url and not '.php' in url:
+
+            parts = url.split('/')
+
+            return self.resolve(self.episode_link.format(parts[-1], '', parts[-2]))
 
         else:
 
