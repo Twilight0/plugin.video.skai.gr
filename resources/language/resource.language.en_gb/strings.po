@@ -12,7 +12,7 @@ msgid "Success"
 msgstr ""
 
 msgctxt "#32001"
-msgid "Live"
+msgid "Live TV"
 msgstr ""
 
 msgctxt "#32002"
@@ -45,6 +45,26 @@ msgstr ""
 
 msgctxt "#32009"
 msgid "Clear function cache"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Show not found"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Noontime news"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Evening news"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Bulletin in sign language"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Live radio"
 msgstr ""
 
 msgctxt "#32500"

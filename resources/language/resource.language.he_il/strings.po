@@ -23,7 +23,7 @@ msgid "Success"
 msgstr "בוצע בהצלחה"
 
 msgctxt "#32001"
-msgid "Live"
+msgid "Live TV"
 msgstr "שידור חי"
 
 msgctxt "#32002"
@@ -57,6 +57,22 @@ msgstr "סימניות"
 msgctxt "#32009"
 msgid "Clear function cache"
 msgstr "נקה מטמון"
+
+msgctxt "#32010"
+msgid "Show not found"
+msgstr "הצג לא נמצא"
+
+msgctxt "#32011"
+msgid "Noontime news"
+msgstr "ללא שם: חדשות"
+
+msgctxt "#32012"
+msgid "Evening news"
+msgstr "חדשות ערב"
+
+msgctxt "#32013"
+msgid "Bulletin in sign language"
+msgstr "עלון בשפת הסימנים"
 
 msgctxt "#32500"
 msgid "Next..."

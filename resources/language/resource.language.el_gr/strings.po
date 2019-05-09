@@ -12,8 +12,8 @@ msgid "Success"
 msgstr "Επιτυχία"
 
 msgctxt "#32001"
-msgid "Live"
-msgstr "Ζωντανά"
+msgid "Live TV"
+msgstr "Ζωντανή τηλεόραση"
 
 msgctxt "#32002"
 msgid "Shows"
@@ -46,6 +46,26 @@ msgstr "Σελιδοδείκτες"
 msgctxt "#32009"
 msgid "Clear function cache"
 msgstr "Καθαρισμός προσωρινής μνήμης"
+
+msgctxt "#32010"
+msgid "Show not found"
+msgstr "Η εκπομπή δεν βρέθηκε"
+
+msgctxt "#32011"
+msgid "Noontime news"
+msgstr "Μεσημβρινό δελτίο"
+
+msgctxt "#32012"
+msgid "Evening news"
+msgstr "Βραδυνό δελτίο"
+
+msgctxt "#32013"
+msgid "Bulletin in sign language"
+msgstr "Δελτίο στη νοηματική γλώσσα"
+
+msgctxt "#32014"
+msgid "Live radio"
+msgstr "Ραδιόφωνο"
 
 msgctxt "#32500"
 msgid "Next..."

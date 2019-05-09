@@ -16,13 +16,13 @@
 '''
 
 
-import urlparse,sys
-
+import sys
+from tulip.compat import parse_qsl
 from xbmc import getInfoLabel
 from resources.lib import skai
 
 
-params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
+params = dict(parse_qsl(sys.argv[2].replace('?','')))
 
 action = params.get('action')
 url = params.get('url')
@@ -30,10 +30,9 @@ url = params.get('url')
 fp = getInfoLabel('Container.FolderPath')
 
 if 'audio' in fp and action is None:
-    action = 'podcasts'
+    skai.indexer().root(audio_only=True)
 
-
-if action is None:
+elif action is None:
     skai.indexer().root()
 
 elif action == 'addBookmark':
@@ -59,8 +58,8 @@ elif action == 'archive':
 elif action == 'episodes':
     skai.indexer().episodes(url)
 
-elif action == 'reverseEpisodes':
-    skai.indexer().episodes(url, reverse=True)
+elif action == 'old_episodes':
+    skai.indexer().old_episodes(url)
 
 elif action == 'popular':
     skai.indexer().popular()
