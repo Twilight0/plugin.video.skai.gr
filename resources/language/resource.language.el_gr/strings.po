@@ -21,7 +21,7 @@ msgstr "Εκπομπές"
 
 msgctxt "#32003"
 msgid "Podcasts"
-msgstr "Ράδιο"
+msgstr "Ραδιοφωνικές εκπομπές"
 
 msgctxt "#32004"
 msgid "Archive"
@@ -65,7 +65,7 @@ msgstr "Δελτίο στη νοηματική γλώσσα"
 
 msgctxt "#32014"
 msgid "Live radio"
-msgstr "Ραδιόφωνο"
+msgstr "Ζωντανό ραδιόφωνο"
 
 msgctxt "#32500"
 msgid "Next..."

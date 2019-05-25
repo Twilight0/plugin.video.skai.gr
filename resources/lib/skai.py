@@ -265,7 +265,7 @@ class indexer:
 
         if url == self.radio_link:
 
-            meta = {'title': 'Skai Radio 100.3'}
+            meta = {'title': 'Skai Radio 100.3FM'}
 
         directory.resolve(url=stream, meta=meta, dash='dash' in stream or '.mpd' in stream)
 

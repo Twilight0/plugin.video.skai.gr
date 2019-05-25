@@ -74,6 +74,10 @@ msgctxt "#32013"
 msgid "Bulletin in sign language"
 msgstr "עלון בשפת הסימנים"
 
+msgctxt "#32014"
+msgid "Live radio"
+msgstr "רדיו בשידור חי"
+
 msgctxt "#32500"
 msgid "Next..."
 msgstr "הבא..."
