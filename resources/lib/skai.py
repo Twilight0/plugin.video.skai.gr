@@ -225,21 +225,21 @@ class indexer:
                 'title': control.lang(32011),
                 'action': 'episodes',
                 'icon': 'news.png',
-                'url': ''.join([self.base_link, '/json/show.php?caption=sezon-2018-2019&cat_caption=enimerosi&cat_caption2=oi-eidiseis-tou-ska-stis-2'])
+                'url': ''.join([self.base_link, '/json/show.php?caption=sezon-2019-2020&cat_caption=enimerosi&cat_caption2=oi-eidiseis-tou-ska-stis-2'])
             }
             ,
             {
                 'title': control.lang(32012),
                 'action': 'episodes',
                 'icon': 'news.png',
-                'url': ''.join([self.base_link, '/json/show.php?caption=sezon-2018-2019&cat_caption=enimerosi&cat_caption2=ta-nea-tou-ska-stis-2000'])
+                'url': ''.join([self.base_link, '/json/show.php?caption=sezon-2019-2020&cat_caption=enimerosi&cat_caption2=ta-nea-tou-ska-stis-2000'])
             }
             ,
             {
                 'title': control.lang(32013),
                 'action': 'episodes',
                 'icon': 'news.png',
-                'url': ''.join([self.base_link, '/json/show.php?caption=sezon-2018-2019&cat_caption=enimerosi&cat_caption2=deltio-sti-noimatiki'])
+                'url': ''.join([self.base_link, '/json/show.php?caption=sezon-2019-2020&cat_caption=enimerosi&cat_caption2=deltio-sti-noimatiki'])
             }
         ]
 
