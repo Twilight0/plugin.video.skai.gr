@@ -17,7 +17,7 @@
 
 import json, re
 from tulip import bookmarks, directory, client, cache, control, youtube
-from tulip.compat import zip
+from tulip.compat import zip, iteritems
 from youtube_resolver import resolve as yt_resolver
 
 
@@ -124,7 +124,7 @@ class Indexer:
             return
 
         for i in self.list:
-            bookmark = dict((k, v) for k, v in i.iteritems() if not k == 'next')
+            bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['delbookmark'] = i['url']
             i.update({'cm': [{'title': 32502, 'query': {'action': 'deleteBookmark', 'url': json.dumps(bookmark)}}]})
 
@@ -142,7 +142,7 @@ class Indexer:
         for i in self.list:
 
             i.update({'action': 'episodes'})
-            bookmark = dict((k, v) for k, v in i.iteritems() if not k == 'next')
+            bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
             i.update({'cm': [{'title': 32501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
 
@@ -161,7 +161,7 @@ class Indexer:
 
             i.update({'action': 'episodes'})
 
-            bookmark = dict((k, v) for k, v in i.iteritems() if not k == 'next')
+            bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
 
             i.update({'cm': [{'title': 32501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
@@ -205,7 +205,7 @@ class Indexer:
 
             i.update({'action': 'episodes'})
 
-            bookmark = dict((k, v) for k, v in i.iteritems() if not k == 'next')
+            bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
 
             i.update({'cm': [{'title': 32501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
