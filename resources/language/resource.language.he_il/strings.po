@@ -71,12 +71,24 @@ msgid "Evening news"
 msgstr "חדשות ערב"
 
 msgctxt "#32013"
-msgid "Bulletin in sign language"
-msgstr "עלון בשפת הסימנים"
+msgid "(Archived)"
+msgstr "(בארכיון)"
 
 msgctxt "#32014"
 msgid "Live radio"
 msgstr "רדיו בשידור חי"
+
+msgctxt "#32015"
+msgid "Entertainment"
+msgstr "בַּדְרָנוּת"
+
+msgctxt "#32016"
+msgid "Popular"
+msgstr "עֲמָמִי"
+
+msgctxt "#32017"
+msgid "Suggested"
+msgstr "מוּצָע"
 
 msgctxt "#32500"
 msgid "Next..."

@@ -60,11 +60,23 @@ msgid "Evening news"
 msgstr ""
 
 msgctxt "#32013"
-msgid "Bulletin in sign language"
+msgid "(Archived)"
 msgstr ""
 
 msgctxt "#32014"
 msgid "Live radio"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Entertainment"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Popular"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Suggested"
 msgstr ""
 
 msgctxt "#32500"

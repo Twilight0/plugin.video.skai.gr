@@ -60,12 +60,24 @@ msgid "Evening news"
 msgstr "Βραδυνό δελτίο"
 
 msgctxt "#32013"
-msgid "Bulletin in sign language"
-msgstr "Δελτίο στη νοηματική γλώσσα"
+msgid "(Archived)"
+msgstr "(Αρχειοθετημένο)"
 
 msgctxt "#32014"
 msgid "Live radio"
 msgstr "Ζωντανό ραδιόφωνο"
+
+msgctxt "#32015"
+msgid "Entertainment"
+msgstr "Ψυχαγωγία"
+
+msgctxt "#32016"
+msgid "Popular"
+msgstr "Δημοφιλή"
+
+msgctxt "#32017"
+msgid "Suggested"
+msgstr "Προτεινόμενα"
 
 msgctxt "#32500"
 msgid "Next..."

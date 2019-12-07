@@ -29,11 +29,8 @@ url = params.get('url')
 
 fp = getInfoLabel('Container.FolderPath')
 
-if 'audio' in fp and action is None:
-    skai.indexer().root(audio_only=True)
-
-elif action is None:
-    skai.indexer().root()
+if action is None:
+    skai.Indexer().root(audio_only='audio' in fp)
 
 elif action == 'addBookmark':
     from tulip import bookmarks
@@ -44,37 +41,31 @@ elif action == 'deleteBookmark':
     bookmarks.delete(url)
 
 elif action == 'bookmarks':
-    skai.indexer().bookmarks()
+    skai.Indexer().bookmarks()
 
-elif action == 'tvshows':
-    skai.indexer().tvshows()
+elif action == 'shows':
+    skai.Indexer().shows(url)
 
 elif action == 'podcasts':
-    skai.indexer().podcasts()
+    skai.Indexer().podcasts(url)
 
 elif action == 'archive':
-    skai.indexer().archive()
+    skai.Indexer().archive()
 
 elif action == 'episodes':
-    skai.indexer().episodes(url)
+    skai.Indexer().episodes(url)
 
-elif action == 'old_episodes':
-    skai.indexer().old_episodes(url)
-
-elif action == 'popular':
-    skai.indexer().popular()
+elif action == 'latest':
+    skai.Indexer().latest()
 
 elif action == 'news':
-    skai.indexer().news()
+    skai.Indexer().news()
 
-elif action == 'sports':
-    skai.indexer().sports()
-
-elif action == 'live':
-    skai.indexer().live()
+elif action == 'videos':
+    skai.Indexer().videos(url)
 
 elif action == 'play':
-    skai.indexer().play(url)
+    skai.Indexer().play(url)
 
 elif action == 'cache_clear':
     from tulip import cache

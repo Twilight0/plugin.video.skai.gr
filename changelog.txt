@@ -1,3 +1,17 @@
+[B]3.0.0[/B]
+- Rework of the addon for website redesign and deprecation of older APIs
+- Removed news in sign language
+- Added the entertainment section
+- Added suggested, popular and recent videos on news section
+- Removed sports
+- Bumped dependencies
+- Updated logo
+
+[B]2.1.0 (beta)[/B]
+- Rework of live resolver
+- Bumped dependencies
+- Updated logo
+
 [B]2.0.X[/B]
 - Rework of the addon with new json API
 - Added live radio
