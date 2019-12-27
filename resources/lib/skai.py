@@ -34,8 +34,6 @@ class Indexer:
         self.tvshows_link = ''.join([self.base_link, '/shows/seires'])
         self.entertainment_link = ''.join([self.base_link, '/shows/psuchagogia'])
         self.news_link = ''.join([self.base_link, '/shows/enimerosi'])
-        self.episodes_link = ''.join([self.base_link, '/json/show.php?caption={0}&cat_caption={1}&cat_caption2={2}'])
-        self.episode_link = ''.join([self.base_link, '/json/episode.php?caption=no&show_caption={0}&epanalipsi={1}&cat_caption2={2}'])
         self.live_link = ''.join([self.base_link, '/live'])
         self.podcasts_link = ''.join([self.radio_base, '/shows?page=0'])
         self.play_link = 'http://videostream.skai.gr/'
@@ -140,7 +138,7 @@ class Indexer:
             return
 
         for i in self.list:
-
+            i['title'] = client.replaceHTMLCodes(i['title'])
             i.update({'action': 'episodes'})
             bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
@@ -233,12 +231,12 @@ class Indexer:
 
     def episodes(self, url):
 
-        if url == self.yt_channel:
-            self.list = cache.get(youtube.youtube(key=self.yt_key).playlist, 3, url)
+        if self.base_link in url:
+            self.list = cache.get(self.episodes_listing, 3, url)
         elif self.radio_base in url:
             self.list = cache.get(self.pod_episodes, 3, url)
         else:
-            self.list = cache.get(self.episodes_listing, 3, url)
+            self.list = cache.get(youtube.youtube(key=self.yt_key).playlist, 3, url)
 
         if self.list is None:
 
@@ -354,19 +352,16 @@ class Indexer:
 
     def play(self, url):
 
-        if url == self.live_link:
-            play_object = self.resolve_live()
-        else:
-            play_object = self.resolve(url)
+        resolved = self.resolve(url)
 
-        if isinstance(play_object, tuple):
+        if isinstance(resolved, tuple):
 
-            stream, plot = play_object
+            stream, plot = resolved
             meta = {'plot': plot}
 
         else:
 
-            stream = play_object
+            stream = resolved
             meta = None
 
         icon = None
@@ -377,7 +372,7 @@ class Indexer:
 
         elif url == self.live_link:
 
-            meta = {'title': 'Skai Live'}
+            meta = {'title': 'Skai Live TV'}
             icon = control.icon()
 
         directory.resolve(url=stream, meta=meta, dash='dash' in stream or '.mpd' in stream, icon=icon)
@@ -452,16 +447,19 @@ class Indexer:
 
     def resolve(self, url):
 
-        if url.startswith('rtmp'):
+        if url == self.live_link:
 
-            p = re.findall('/([a-zA-Z0-9]{3,}:)', url)
+            html = client.request(self.live_link)
 
-            if len(p) > 0:
-                url = url.replace(p[0], ' playpath={0}'.format(p[0]))
+            json_ = re.search(r'var data = ({.+?});', html).group(1)
 
-            url += ' timeout=10'
+            json_ = json.loads(json_)
 
-            return url
+            youtu_id = json_['now']['livestream']
+
+            stream = self.yt_session(youtu_id)
+
+            return stream
 
         elif len(url) == 11:
 
@@ -494,20 +492,6 @@ class Indexer:
         else:
 
             return url
-
-    def resolve_live(self):
-
-        html = client.request(self.live_link)
-
-        json_ = re.search(r'var data = ({.+?});', html).group(1)
-
-        json_ = json.loads(json_)
-
-        youtu_id = json_['now']['livestream']
-
-        stream = self.yt_session(youtu_id)
-
-        return stream
 
     @staticmethod
     def yt_session(yt_id):
