@@ -271,6 +271,8 @@ class Indexer:
 
         for title, date, image, video in listing:
 
+            title = client.replaceHTMLCodes(title)
+
             label = ''.join([title, ' ', '(', date, ')'])
 
             self.list.append(
