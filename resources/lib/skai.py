@@ -377,7 +377,13 @@ class Indexer:
             meta = {'title': 'Skai Live TV'}
             icon = control.icon()
 
-        directory.resolve(url=stream, meta=meta, dash='dash' in stream or '.mpd' in stream, icon=icon)
+        dash = ('dash' in stream or '.mpd' in stream or 'm3u8' in stream) and control.kodi_version() >= 18.0
+
+        directory.resolve(
+            url=stream, meta=meta, dash=dash, icon=icon,
+            mimetype='application/vnd.apple.mpegurl' if 'm3u8' in stream else None,
+            manifest_type='hls' if '.m3u8' in stream else None
+        )
 
     def generic_listing(self, url):
 
@@ -457,11 +463,7 @@ class Indexer:
 
             json_ = json.loads(json_)
 
-            youtu_id = json_['now']['livestream']
-
-            stream = self.yt_session(youtu_id)
-
-            return stream
+            return json_['now']['livestream']
 
         elif len(url) == 11:
 
