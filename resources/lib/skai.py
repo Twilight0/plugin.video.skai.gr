@@ -356,6 +356,9 @@ class Indexer:
 
         resolved = self.resolve(url)
 
+        if 'youtu' in resolved:
+            resolved = self.yt_session(resolved)
+
         if isinstance(resolved, tuple):
 
             stream, plot = resolved
@@ -498,9 +501,9 @@ class Indexer:
             return url
 
     @staticmethod
-    def yt_session(yt_id):
+    def yt_session(link):
 
-        streams = yt_resolver(yt_id)
+        streams = yt_resolver(link)
 
         try:
             addon_enabled = control.addon_details('inputstream.adaptive').get('enabled')
