@@ -16,6 +16,7 @@
 '''
 
 import json, re
+from base64 import b64decode
 from tulip import bookmarks, directory, client, cache, control, youtube
 from tulip.compat import zip, iteritems
 from youtube_resolver import resolve as yt_resolver
@@ -30,7 +31,7 @@ class Indexer:
         self.old_base = 'http://www.skai.gr'
         self.radio_base = 'http://www.skairadio.gr'
         self.yt_channel = 'UCmHgxU394HiIAsN1fMegqzw'
-        self.yt_key = 'AIzaSyBOS4uSyd27OU0XV2KSdN3vT2UG_v0g9sI'
+        self.yt_key = b64decode('nZzbjNEWFNVLz5kakF3VUBDWrlkQ1lEVQJUYyp3VL9FR5NVY6lUQ'[::-1])
         self.tvshows_link = ''.join([self.base_link, '/shows/seires'])
         self.entertainment_link = ''.join([self.base_link, '/shows/psuchagogia'])
         self.news_link = ''.join([self.base_link, '/shows/enimerosi'])
