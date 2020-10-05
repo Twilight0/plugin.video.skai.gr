@@ -27,8 +27,8 @@ class Indexer:
     def __init__(self):
 
         self.list = []; self.data = []
-        self.base_link = 'http://www.skaitv.gr'
-        self.old_base = 'http://www.skai.gr'
+        self.base_link = 'https://www.skaitv.gr'
+        self.old_base = 'https://www.skai.gr'
         self.radio_base = 'http://www.skairadio.gr'
         self.yt_channel = 'UCmHgxU394HiIAsN1fMegqzw'
         self.yt_key = b64decode('nZzbjNEWFNVLz5kakF3VUBDWrlkQ1lEVQJUYyp3VL9FR5NVY6lUQ'[::-1])
@@ -38,7 +38,7 @@ class Indexer:
         self.live_link = ''.join([self.base_link, '/live'])
         self.podcasts_link = ''.join([self.radio_base, '/shows?page=0'])
         self.play_link = 'http://videostream.skai.gr/'
-        self.radio_link = 'http://liveradio.skai.gr/skaihd/skai/playlist.m3u8'
+        self.radio_link = 'https://skai.live24.gr/skai1003'
 
     def root(self, audio_only=False):
 
@@ -57,6 +57,12 @@ class Indexer:
                 'url': self.radio_link,
                 'isFolder': 'False',
                 'icon': 'live.png'
+            }
+            ,
+            {
+                'title': control.lang(32006),
+                'action': 'news',
+                'icon': 'news.png'
             }
             ,
             {
@@ -89,12 +95,6 @@ class Indexer:
                 'title': control.lang(32005),
                 'action': 'latest',
                 'icon': 'latest.png'
-            }
-            ,
-            {
-                'title': control.lang(32006),
-                'action': 'news',
-                'icon': 'news.png'
             }
             ,
             {
@@ -319,14 +319,14 @@ class Indexer:
                 'title': 32011,
                 'action': 'episodes',
                 'icon': 'news.png',
-                'url': ''.join([self.base_link, '/show/enimerosi/oi-eidiseis-tou-ska-stis-2/sezon-2019-2020'])
+                'url': ''.join([self.base_link, '/show/enimerosi/oi-eidiseis-tou-ska-stis-2/sezon-2020-2021'])
             }
             ,
             {
                 'title': 32012,
                 'action': 'episodes',
                 'icon': 'news.png',
-                'url': ''.join([self.base_link, '/show/enimerosi/ta-nea-tou-ska-stis-2000/sezon-2019-2020'])
+                'url': ''.join([self.base_link, '/show/enimerosi/ta-nea-tou-ska-stis-2000/sezon-2020-2021'])
             }
             ,
             {
