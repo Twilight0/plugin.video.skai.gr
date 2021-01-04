@@ -31,7 +31,7 @@ class Indexer:
         self.old_base = 'https://www.skai.gr'
         self.radio_base = 'http://www.skairadio.gr'
         self.yt_channel = 'UCmHgxU394HiIAsN1fMegqzw'
-        self.yt_key = b64decode('nZzbjNEWFNVLz5kakF3VUBDWrlkQ1lEVQJUYyp3VL9FR5NVY6lUQ'[::-1])
+        self.yt_key = b64decode('VhXbK1mdndFejF1dJJWMnNmc4IlbEl3a2d1QxgHZOdjQ5NVY6lUQ'[::-1])
         self.tvshows_link = ''.join([self.base_link, '/shows/seires'])
         self.entertainment_link = ''.join([self.base_link, '/shows/psuchagogia'])
         self.news_link = ''.join([self.base_link, '/shows/enimerosi'])
