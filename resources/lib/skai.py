@@ -46,7 +46,8 @@ class Indexer:
 
         self.list = [
             {
-                'title': control.lang(30001),
+                'label': control.lang(30001),
+                'title': 'Skai Live TV',
                 'action': 'play',
                 'isFolder': 'False',
                 'icon': 'live.png',
@@ -54,7 +55,8 @@ class Indexer:
             }
             ,
             {
-                'title': control.lang(30014),
+                'label': control.lang(30014),
+                'title': 'Skai Radio 100.3FM',
                 'action': 'play',
                 'url': self.radio_link,
                 'isFolder': 'False',
@@ -121,7 +123,9 @@ class Indexer:
 
         self.list = bookmarks.get()
 
-        if self.list is None:
+        if not self.list:
+            na = [{'title': control.lang(30018), 'action': None}]
+            directory.add(na)
             return
 
         for i in self.list:
@@ -394,14 +398,9 @@ class Indexer:
 
         icon = None
 
-        if url == self.radio_link:
+        if url == self.live_link:
 
-            meta = {'title': 'Skai Radio 100.3FM'}
-
-        elif url == self.live_link:
-
-            meta = {'title': 'Skai Live TV'}
-            icon = control.icon()
+            icon = {'poster': control.icon(), 'icon': control.icon(), 'thumb': control.icon()}
 
         dash = ('dash' in stream or '.mpd' in stream or 'm3u8' in stream) and control.kodi_version() >= 18.0
 

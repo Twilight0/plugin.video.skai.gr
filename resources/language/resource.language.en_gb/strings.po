@@ -75,6 +75,10 @@ msgctxt "#30017"
 msgid "Suggested"
 msgstr ""
 
+msgctxt "#30058"
+msgid "No bookmarks found"
+msgstr ""
+
 msgctxt "#30402"
 msgid "Success"
 msgstr ""

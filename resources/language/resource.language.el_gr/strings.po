@@ -75,6 +75,10 @@ msgctxt "#30017"
 msgid "Suggested"
 msgstr "Προτεινόμενα"
 
+msgctxt "#30018"
+msgid "No bookmarks found"
+msgstr "Δεν βρέθηκαν σελιδοδείκτες"
+
 msgctxt "#30402"
 msgid "Success"
 msgstr "Επιτυχία"
