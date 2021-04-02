@@ -21,6 +21,8 @@ from tulip import bookmarks, directory, client, cache, control, youtube
 from tulip.compat import zip, iteritems
 from youtube_resolver import resolve as yt_resolver
 
+method_cache = cache.FunctionCache().cache_method
+
 
 class Indexer:
 
@@ -37,14 +39,14 @@ class Indexer:
         self.news_link = ''.join([self.base_link, '/shows/enimerosi'])
         self.live_link = ''.join([self.base_link, '/live'])
         self.podcasts_link = ''.join([self.radio_base, '/shows?page=0'])
-        self.play_link = 'http://videostream.skai.gr/'
+        self.play_link = 'https://videostream.skai.gr/skaivod/_definst_/mp4:skai/'
         self.radio_link = 'https://skai.live24.gr/skai1003'
 
     def root(self, audio_only=False):
 
         self.list = [
             {
-                'title': control.lang(32001),
+                'title': control.lang(30001),
                 'action': 'play',
                 'isFolder': 'False',
                 'icon': 'live.png',
@@ -52,7 +54,7 @@ class Indexer:
             }
             ,
             {
-                'title': control.lang(32014),
+                'title': control.lang(30014),
                 'action': 'play',
                 'url': self.radio_link,
                 'isFolder': 'False',
@@ -60,45 +62,45 @@ class Indexer:
             }
             ,
             {
-                'title': control.lang(32006),
+                'title': control.lang(30006),
                 'action': 'news',
                 'icon': 'news.png'
             }
             ,
             {
-                'title': control.lang(32002),
+                'title': control.lang(30002),
                 'action': 'shows',
                 'icon': 'tvshows.png',
                 'url': self.tvshows_link
             }
             ,
             {
-                'title': control.lang(32015),
+                'title': control.lang(30015),
                 'action': 'shows',
                 'icon': 'entertainment.png',
                 'url': self.entertainment_link
             }
             ,
             {
-                'title': control.lang(32003),
+                'title': control.lang(30003),
                 'action': 'podcasts',
                 'icon': 'podcasts.png'
             }
             ,
             {
-                'title': control.lang(32004),
+                'title': control.lang(30004),
                 'action': 'archive',
                 'icon': 'archive.png'
             }
             ,
             {
-                'title': control.lang(32005),
+                'title': control.lang(30005),
                 'action': 'latest',
                 'icon': 'latest.png'
             }
             ,
             {
-                'title': control.lang(32008),
+                'title': control.lang(30008),
                 'action': 'bookmarks',
                 'icon': 'bookmarks.png'
             }
@@ -110,7 +112,7 @@ class Indexer:
 
         for item in self.list:
 
-            cache_clear = {'title': 32009, 'query': {'action': 'cache_clear'}}
+            cache_clear = {'title': 30009, 'query': {'action': 'cache_clear'}}
             item.update({'cm': [cache_clear]})
 
         directory.add(self.list, content='videos')
@@ -125,15 +127,30 @@ class Indexer:
         for i in self.list:
             bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['delbookmark'] = i['url']
-            i.update({'cm': [{'title': 32502, 'query': {'action': 'deleteBookmark', 'url': json.dumps(bookmark)}}]})
+            i.update({'cm': [{'title': 30502, 'query': {'action': 'deleteBookmark', 'url': json.dumps(bookmark)}}]})
 
         self.list = sorted(self.list, key=lambda k: k['title'].lower())
 
         directory.add(self.list, content='videos')
 
+    @method_cache(2880)
+    def yt_playlists(self):
+
+        return youtube.youtube(key=self.yt_key).playlists(self.yt_channel)
+
+    @method_cache(60)
+    def yt_videos(self):
+
+        return youtube.youtube(key=self.yt_key).videos(self.yt_channel, limit=2)
+
+    @method_cache(180)
+    def yt_playlist(self, url):
+
+        return youtube.youtube(key=self.yt_key).playlist(url)
+
     def archive(self):
 
-        self.list = cache.get(youtube.youtube(key=self.yt_key).playlists, 12, self.yt_channel)
+        self.list = self.yt_playlists()
 
         if self.list is None:
             return
@@ -143,7 +160,7 @@ class Indexer:
             i.update({'action': 'episodes'})
             bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
-            i.update({'cm': [{'title': 32501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
+            i.update({'cm': [{'title': 30501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
 
         control.sortmethods('title')
 
@@ -151,7 +168,7 @@ class Indexer:
 
     def shows(self, url):
 
-        self.list = cache.get(self.generic_listing, 24, url)
+        self.list = self.generic_listing(url)
 
         if self.list is None:
             return
@@ -163,10 +180,11 @@ class Indexer:
             bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
 
-            i.update({'cm': [{'title': 32501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
+            i.update({'cm': [{'title': 30501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
 
         directory.add(self.list, content='videos')
 
+    @method_cache(1440)
     def pod_listing(self, url):
 
         html = client.request(url)
@@ -178,13 +196,15 @@ class Indexer:
         for item in listing:
 
             title = client.parseDOM(item, 'h3')[0].replace('&#039;', '\'')
+            if title.startswith('<span'):
+                title = client.parseDOM(item, 'a', {'class': 'font-weight-bold text-initial'})[0]
             image = ''.join([self.radio_base, client.parseDOM(item, 'img', ret='src')[0]])
             url = ''.join([self.radio_base, client.parseDOM(item, 'a', ret='href')[0]])
 
             self.list.append(
                 {
                     'title': title, 'image': image, 'url': url, 'nextaction': 'podcasts', 'next': nexturl,
-                    'nextlabel': 32500
+                    'nextlabel': 30500
                 }
             )
 
@@ -195,7 +215,7 @@ class Indexer:
         if url is None:
             url = self.podcasts_link
 
-        self.list = cache.get(self.pod_listing, 24, url)
+        self.list = self.pod_listing(url)
 
         if self.list is None:
             return
@@ -207,10 +227,11 @@ class Indexer:
             bookmark = dict((k, v) for k, v in iteritems(i) if not k == 'next')
             bookmark['bookmark'] = i['url']
 
-            i.update({'cm': [{'title': 32501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
+            i.update({'cm': [{'title': 30501, 'query': {'action': 'addBookmark', 'url': json.dumps(bookmark)}}]})
 
         directory.add(self.list, content='music')
 
+    @method_cache(180)
     def pod_episodes(self, url):
 
         html = client.request(url)
@@ -233,11 +254,11 @@ class Indexer:
     def episodes(self, url):
 
         if self.base_link in url:
-            self.list = cache.get(self.episodes_listing, 3, url)
+            self.list = self.episodes_listing(url)
         elif self.radio_base in url:
-            self.list = cache.get(self.pod_episodes, 3, url)
+            self.list = self.pod_episodes(url)
         else:
-            self.list = cache.get(youtube.youtube(key=self.yt_key).playlist, 3, url)
+            self.list = self.yt_playlist(url)
 
         if self.list is None:
 
@@ -249,6 +270,7 @@ class Indexer:
 
         directory.add(self.list, content='videos')
 
+    @method_cache(180)
     def video_listing(self, url):
 
         html = client.request(url)
@@ -278,7 +300,7 @@ class Indexer:
 
             self.list.append(
                 {
-                    'title': label, 'image': image, 'url': video, 'next': nexturl, 'nextlabel': 32500,
+                    'title': label, 'image': image, 'url': video, 'next': nexturl, 'nextlabel': 30500,
                     'nextaction': 'videos'
                 }
             )
@@ -287,7 +309,7 @@ class Indexer:
 
     def videos(self, url):
 
-        self.list = cache.get(self.video_listing, 3, url)
+        self.list = self.video_listing(url)
 
         if self.list is None:
             return
@@ -300,7 +322,7 @@ class Indexer:
 
     def latest(self):
 
-        self.list = cache.get(youtube.youtube(key=self.yt_key).videos, 1, self.yt_channel, False, 2)
+        self.list = self.yt_videos()
 
         if self.list is None:
             return
@@ -316,35 +338,35 @@ class Indexer:
 
         self.list = [
             {
-                'title': 32011,
+                'title': 30011,
                 'action': 'episodes',
                 'icon': 'news.png',
                 'url': ''.join([self.base_link, '/show/enimerosi/oi-eidiseis-tou-ska-stis-2/sezon-2020-2021'])
             }
             ,
             {
-                'title': 32012,
+                'title': 30012,
                 'action': 'episodes',
                 'icon': 'news.png',
                 'url': ''.join([self.base_link, '/show/enimerosi/ta-nea-tou-ska-stis-2000/sezon-2020-2021'])
             }
             ,
             {
-                'title': 32005,
+                'title': 30005,
                 'action': 'videos',
                 'icon': 'latest.png',
                 'url': ''.join([self.old_base, '/videos?type=recent'])
             }
             ,
             {
-                'title': 32016,
+                'title': 30016,
                 'action': 'videos',
                 'icon': 'popular.png',
                 'url': ''.join([self.old_base, '/videos?type=popular'])
             }
             ,
             {
-                'title': 32017,
+                'title': 30017,
                 'action': 'videos',
                 'icon': 'recommended.png',
                 'url': ''.join([self.old_base, '/videos?type=featured'])
@@ -389,6 +411,7 @@ class Indexer:
             manifest_type='hls' if '.m3u8' in stream else None
         )
 
+    @method_cache(1440)
     def generic_listing(self, url):
 
         html = client.request(url)
@@ -429,7 +452,7 @@ class Indexer:
 
             for item in items:
 
-                title = ' - '.join([client.parseDOM(item, 'h3')[0], control.lang(32013)])
+                title = ' - '.join([client.parseDOM(item, 'h3')[0], control.lang(30013)])
                 image = client.parseDOM(item, 'img', ret='src')[0]
 
                 url = ''.join([self.base_link, client.parseDOM(item, 'a', ret='href')[0]])
@@ -438,6 +461,7 @@ class Indexer:
 
         return self.list
 
+    @method_cache(180)
     def episodes_listing(self, url):
 
         html = client.request(url)
@@ -456,6 +480,29 @@ class Indexer:
             self.list.append({'title': title, 'url': url, 'image': image})
 
         return self.list
+
+    @method_cache(720)
+    def episode_resolver(self, url):
+
+        html = client.request(url)
+
+        if url.startswith(self.radio_base):
+
+            url = re.search(r'["\'](.+?\.mp3)["\']', html).group(1)
+
+            return url
+
+        else:
+
+            json_ = re.search(r'var data = ({.+})', html).group(1)
+
+            json_ = json.loads(json_)
+
+            url = ''.join([self.play_link, json_['episode'][0]['media_item_file'], '/chunklist.m3u8'])
+
+            plot = client.stripTags(json_['episode'][0]['descr'])
+
+            return url, plot
 
     def resolve(self, url):
 
@@ -477,25 +524,7 @@ class Indexer:
 
         elif 'episode' in url:
 
-            html = client.request(url)
-
-            if url.startswith(self.radio_base):
-
-                url = re.search(r'["\'](.+?\.mp3)["\']', html).group(1)
-
-                return url
-
-            else:
-
-                json_ = re.search(r'var data = ({.+?});', html).group(1)
-
-                json_ = json.loads(json_)
-
-                url = ''.join([self.play_link, json_['episode'][0]['media_item_file'], '.m3u8'])
-
-                plot = client.stripTags(json_['episode'][0]['descr'])
-
-                return url, plot
+            return self.episode_resolver(url)
 
         else:
 

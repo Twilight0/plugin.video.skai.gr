@@ -7,86 +7,86 @@
 msgid ""
 msgstr ""
 
+msgctxt "#30001"
+msgid "Live TV"
+msgstr "Ζωντανή τηλεόραση"
+
+msgctxt "#30002"
+msgid "Shows"
+msgstr "Εκπομπές"
+
+msgctxt "#30003"
+msgid "Podcasts"
+msgstr "Ραδιοφωνικές εκπομπές"
+
+msgctxt "#30004"
+msgid "Archive"
+msgstr "Αρχείο"
+
+msgctxt "#30005"
+msgid "Latest"
+msgstr "Πρόσφατα"
+
+msgctxt "#30006"
+msgid "News"
+msgstr "Ειδήσεις"
+
+msgctxt "#30007"
+msgid "Sports"
+msgstr "Αθλητικά"
+
+msgctxt "#30008"
+msgid "Bookmarks"
+msgstr "Σελιδοδείκτες"
+
+msgctxt "#30009"
+msgid "Clear function cache"
+msgstr "Καθαρισμός προσωρινής μνήμης"
+
+msgctxt "#30010"
+msgid "Show not found"
+msgstr "Η εκπομπή δεν βρέθηκε"
+
+msgctxt "#30011"
+msgid "Noontime news"
+msgstr "Μεσημβρινό δελτίο"
+
+msgctxt "#30012"
+msgid "Evening news"
+msgstr "Βραδυνό δελτίο"
+
+msgctxt "#30013"
+msgid "(Archived)"
+msgstr "(Αρχειοθετημένο)"
+
+msgctxt "#30014"
+msgid "Live radio"
+msgstr "Ζωντανό ραδιόφωνο"
+
+msgctxt "#30015"
+msgid "Entertainment"
+msgstr "Ψυχαγωγία"
+
+msgctxt "#30016"
+msgid "Popular"
+msgstr "Δημοφιλή"
+
+msgctxt "#30017"
+msgid "Suggested"
+msgstr "Προτεινόμενα"
+
 msgctxt "#30402"
 msgid "Success"
 msgstr "Επιτυχία"
 
-msgctxt "#32001"
-msgid "Live TV"
-msgstr "Ζωντανή τηλεόραση"
-
-msgctxt "#32002"
-msgid "Shows"
-msgstr "Εκπομπές"
-
-msgctxt "#32003"
-msgid "Podcasts"
-msgstr "Ραδιοφωνικές εκπομπές"
-
-msgctxt "#32004"
-msgid "Archive"
-msgstr "Αρχείο"
-
-msgctxt "#32005"
-msgid "Latest"
-msgstr "Πρόσφατα"
-
-msgctxt "#32006"
-msgid "News"
-msgstr "Ειδήσεις"
-
-msgctxt "#32007"
-msgid "Sports"
-msgstr "Αθλητικά"
-
-msgctxt "#32008"
-msgid "Bookmarks"
-msgstr "Σελιδοδείκτες"
-
-msgctxt "#32009"
-msgid "Clear function cache"
-msgstr "Καθαρισμός προσωρινής μνήμης"
-
-msgctxt "#32010"
-msgid "Show not found"
-msgstr "Η εκπομπή δεν βρέθηκε"
-
-msgctxt "#32011"
-msgid "Noontime news"
-msgstr "Μεσημβρινό δελτίο"
-
-msgctxt "#32012"
-msgid "Evening news"
-msgstr "Βραδυνό δελτίο"
-
-msgctxt "#32013"
-msgid "(Archived)"
-msgstr "(Αρχειοθετημένο)"
-
-msgctxt "#32014"
-msgid "Live radio"
-msgstr "Ζωντανό ραδιόφωνο"
-
-msgctxt "#32015"
-msgid "Entertainment"
-msgstr "Ψυχαγωγία"
-
-msgctxt "#32016"
-msgid "Popular"
-msgstr "Δημοφιλή"
-
-msgctxt "#32017"
-msgid "Suggested"
-msgstr "Προτεινόμενα"
-
-msgctxt "#32500"
+msgctxt "#30500"
 msgid "Next..."
 msgstr "Επόμενα..."
 
-msgctxt "#32501"
+msgctxt "#30501"
 msgid "Add to bookmarks"
 msgstr "Προσθήκη στους σελιδοδείκτες"
 
-msgctxt "#32502"
+msgctxt "#30502"
 msgid "Remove from bookmarks"
 msgstr "Αφαίρεση από σελιδοδείκτες"
